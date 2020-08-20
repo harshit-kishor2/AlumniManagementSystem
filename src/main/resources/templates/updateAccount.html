@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="keywords"
+	content="Bootstrap, Landing page, Template, Registration, Landing">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="Grayrids">
+<title>Update Account</title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/line-icons.css">
+<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/assets/css/owl.theme.default.css">
+<link rel="stylesheet" href="/assets/css/slicknav.min.css">
+<link rel="stylesheet" href="/assets/css/animate.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/responsive.css">
+<style>
+.error {
+	color: red;
+	font-style: italic;
+}
+</style>
+</head>
+<body>
+	<div th:insert="~{Fragments/defaultFragment :: header}"></div>
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="inner-header">
+						<h3 th:inline="text">Hello,
+							[[${#httpServletRequest.remoteUser}]]! Update your account below,</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<section id="content" class="section-padding">
+	<a href="/home"> Home </a>
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-5 col-md-6 col-xs-12">
+					<div class="page-login-form box">
+						<form action="#" th:action="@{/updateAccount}"
+							th:object="${updateform}" method="post">
+
+							<div class="form-group">
+								<h6 th:inline="text"> Your first name is:
+									[[${user.firstName}]]</h6>
+								<div>
+									new first name: <input type="text" class="form-control"
+										name="firstname" th:field="*{firstName}">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<h6 th:inline="text"> Your last name is:
+									[[${user.lastName}]]</h6>
+								<div>
+									new last name: <input type="text" class="form-control"
+										name="lastname" th:field="*{lastName}">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<h6 th:inline="text"> Your email is:
+									[[${user.email}]]</h6>
+								<div>
+									new email: <input type="text" class="form-control" name="email"
+										th:field="*{email}">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<h6 th:inline="text"> Your phone number is:
+									[[${user.phoneNumber}]]</h6>
+								<div>
+									new phone number: <input type="text" class="form-control"
+										name="phoneNumber" th:field="*{phoneNumber}">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<h6 th:inline="text"> Your address is:
+									[[${user.userAddress}]]</h6>
+								<div>
+									new address: <input type="text" class="form-control"
+										name="userAddress" th:field="*{address}">
+								</div>
+							</div>
+
+							<button class="btn btn-common log-btn mt-3" type="submit">Update</button>
+
+						</form>
+
+						<br>
+						<div th:if="${error}" class="error">
+							<table>
+								<tr th:each="formerror: ${formErrors}">
+									<td th:text="${formerror}"></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div th:insert="~{Fragments/defaultFragment :: footer}"></div>
+</body>
+</html>

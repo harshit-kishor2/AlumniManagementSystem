@@ -1,0 +1,18 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeLeaf-extras-springsecurity3">
+      
+<head>
+	<meta charset="UTF-8">
+	<title>User Logout</title>
+</head>
+<body>
+	<div style="padding:20px;margin-top:30px;height:1500px;">
+		<h1 th:inline="text">Do you want to log out [[${#httpServletRequest.remoteUser}]]?</h1>
+		<form th:action="@{/logout}" method="post">
+			<p><input type="submit" value="Sign Out"/> <input type="button" value="Go Back" onclick="history.back()"></p> 
+		</form>
+	</div>
+	</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="ISO-8859-1">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="keywords"
+	content="Bootstrap, Landing page, Template, Registration, Landing">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="Grayrids">
+<title>Post Job Opening</title>
+<style>
+.error {
+	color: red;
+	font-style: italic;
+}
+</style>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/line-icons.css">
+<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/assets/css/owl.theme.default.css">
+<link rel="stylesheet" href="/assets/css/slicknav.min.css">
+<link rel="stylesheet" href="/assets/css/animate.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/responsive.css">
+</head>
+<body>
+<body>
+	<div th:insert="~{Fragments/defaultFragment :: header}"></div>
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="inner-header">
+						<h3>Post a Job</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<section id="content" class="section-padding">
+		<a href="/home"> Home </a>
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-5 col-md-6 col-xs-12">
+					<div class="page-login-form box">
+						<form action="#" th:action="@{/postJobOpenings}"
+							th:object="${postjob}" method="post">
+							<p th:if="${jobIDError}" class="error">Entered Job ID is
+								already Exist!</p>
+							<p th:if="${idError}" class="error">Entered Job ID Not in
+								valid Form!</p>
+							<table>
+								<tr class="form-group">
+									<td>Job ID</td>
+									<td><input type="text" required="required"
+										class="form-control" th:field="*{jobID}" /></td>
+								</tr>
+								<tr>
+									<td>Position</td>
+									<td><input type="text" required="required"
+										class="form-control" th:field="*{position}" /></td>
+								</tr>
+								<tr>
+									<td>Proficiency</td>
+									<td><input type="text" required="required"
+										class="form-control" th:field="*{proficiancy}" /></td>
+								</tr>
+								<tr>
+									<td>Location</td>
+									<td><input type="text" required="required"
+										class="form-control" th:field="*{location}" /></td>
+								</tr>
+								<tr>
+									<td>Start Date</td>
+									<td><input type="date" class="form-control"
+										th:field="*{startDate}"
+										th:text="${#dates.format(startDate, 'dd-MM-yyyy')}" /></td>
+								</tr>
+								<tr>
+									<td>End Date</td>
+									<td><input type="date" class="form-control"
+										th:field="*{endDate}"
+										th:text="${#dates.format(endDate, 'dd-MM-yyyy')}" /></td>
+								</tr>
+								<tr>
+									<td>Hours Per Week</td>
+									<td><input type="text" class="form-control"
+										th:field="*{hoursPerWeek}" /></td>
+								</tr>
+								<tr>
+									<td>Pay Rate</td>
+									<td><input type="text" class="form-control"
+										th:field="*{payrate}" /></td>
+								</tr>
+								<tr>
+									<td>CompanyName</td>
+									<td><input type="text" class="form-control"
+										required="required" th:field="*{companyName.companyName}" /></td>
+								</tr>
+								<tr>
+									<td>Contact Number</td>
+									<td><input type="text" class="form-control"
+										th:field="*{companyName.phoneNumber}" /></td>
+								</tr>
+								<tr>
+									<td>Job Description</td>
+									<td><input type="text" class="form-control"
+										required="required" th:field="*{jobDescription}" /></td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<h3>Skills</h3>
+										<ul>
+											<li th:each="skill : ${skills}"><input type="checkbox"
+												name="ski" th:value="${skill.skillID}" /> <label
+												th:text="${skill.skillName}"></label></li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td><button class="btn btn-common log-btn mt-3"
+											type="submit">Submit</button></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div th:insert="~{Fragments/defaultFragment :: footer}"></div>
+</body>
+</body>
+</html>

@@ -1,0 +1,55 @@
+-- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
+--
+-- Host: localhost    Database: stayconnected
+-- ------------------------------------------------------
+-- Server version	8.0.17
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `userskills`
+--
+
+DROP TABLE IF EXISTS `userskills`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `userskills` (
+  `RID` varchar(30) DEFAULT NULL,
+  `skillID` int(11) DEFAULT NULL,
+  `proficiency` varchar(15) DEFAULT NULL,
+  KEY `RID` (`RID`),
+  KEY `skillID` (`skillID`),
+  CONSTRAINT `userskills_ibfk_1` FOREIGN KEY (`RID`) REFERENCES `useraccount` (`RID`) ON DELETE CASCADE,
+  CONSTRAINT `userskills_ibfk_2` FOREIGN KEY (`skillID`) REFERENCES `skills` (`skillID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `userskills`
+--
+
+LOCK TABLES `userskills` WRITE;
+/*!40000 ALTER TABLE `userskills` DISABLE KEYS */;
+INSERT INTO `userskills` VALUES ('R01241335',1,'E'),('R01241335',2,'I'),('R01241235',1,'S'),('R01341335',3,'E'),('R01241366',1,'S'),('R02221325',4,'I'),('R-23234',2,NULL),('R-23235',2,NULL),('R-11111',1,NULL),('R-11111',3,NULL),('R-22222',2,NULL),('R-22222',3,NULL),('R-33333',1,NULL),('R-33333',3,NULL),('R-11112',2,NULL),('R-11112',3,NULL);
+/*!40000 ALTER TABLE `userskills` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2020-06-23 22:54:25

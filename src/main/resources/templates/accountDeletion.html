@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="ISO-8859-1">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="keywords"
+	content="Bootstrap, Landing page, Template, Registration, Landing">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="Grayrids">
+<title>Account Deletion</title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/line-icons.css">
+<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/assets/css/owl.theme.default.css">
+<link rel="stylesheet" href="/assets/css/slicknav.min.css">
+<link rel="stylesheet" href="/assets/css/animate.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/responsive.css">
+<style>
+.error {
+	color: red;
+	font-style: italic;
+}
+</style>
+</head>
+<body>
+	<div th:insert="~{Fragments/defaultFragment :: header}"></div>
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="inner-header">
+						<h3>Want to delete an account?</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<section id="content" class="section-padding">
+		<p sec:authorize="hasRole('ROLE_FACULTY')">
+			<a href="/home"> Home </a> | <a href="/manageAccount">
+				ManageAccount </a>
+		</p>
+		<p sec:authorize="!hasRole('ROLE_FACULTY') or !isAuthenticated()">
+			<a href="/home"> Home </a>
+		</p>
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-5 col-md-6 col-xs-12">
+					<div class="page-login-form box">
+						<p sec:authorize="!hasRole('ROLE_FACULTY')" class="error">
+							You Are Not Authorized to Access This Page !!!!<br> <a
+								href="/home"> Go Back TO Home</a>
+						</p>
+						<div sec:authorize="hasRole('ROLE_FACULTY')">
+							<h3>Use this page to delete an account</h3>
+							<div>
+								<div class="form-group">
+									<div th:if="${formSelection == 1}">
+										<form th:action="@{/accountDeletion/formA}"
+											th:object="${formA}" method="post">
+
+											<label> Enter the RID of the user you wish to delete</label>
+											<input type="text" class="form-control" name="RID"
+												th:field="*{RID}" required>
+
+											<button class="btn btn-common log-btn mt-3" type="submit">Delete</button>
+										</form>
+									</div>
+									<div>
+										<p th:text=${error}></p>
+									</div>
+
+
+									<div th:if="${formSelection == 2}">
+
+										<table>
+											<tr>
+												<th style="">Selected Account</th>
+											</tr>
+											<tr>
+											</tr>
+											<tr>
+												<th>First Name</th>
+												<td th:text="${user.firstName}"></td>
+											</tr>
+											<tr>
+												<th>Last Name</th>
+												<td th:text="${user.lastName}"></td>
+											</tr>
+											<tr>
+												<th>Email</th>
+												<td th:text="${user.email}">}</td>
+											</tr>
+											<tr>
+												<th>Address</th>
+												<td th:text="${user.userAddress}">}</td>
+											</tr>
+											<tr>
+												<th>Phone Number</th>
+												<td th:text="${user.phoneNumber}">}</td>
+											</tr>
+										</table>
+
+										<form th:action="@{/accountDeletion/formB}"
+											th:object="${choice}" method="post">
+											<br> <label> Are you sure you want to delete
+												this account?</label> <input type="radio" name="yes" value="YES"
+												th:text="YES" th:field="*{selection}" /> <input
+												type="radio" name="no" value="NO" th:text="NO"
+												th:field="*{selection}" checked/>
+											<button class="btn btn-common log-btn mt-3" type="submit">Confirm</button>
+
+										</form>
+
+									</div>
+									<div>
+										<p th:text=${success}></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div th:insert="~{Fragments/defaultFragment :: footer}"></div>
+</body>
+</html>

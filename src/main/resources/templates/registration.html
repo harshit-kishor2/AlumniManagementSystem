@@ -1,0 +1,214 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="ISO-8859-1">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="keywords"
+	content="Bootstrap, Landing page, Template, Registration, Landing">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="Grayrids">
+<title>Account Registration</title>
+<style>
+.error {
+	color: red;
+	font-style: italic;
+}
+</style>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/line-icons.css">
+<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/assets/css/owl.theme.default.css">
+<link rel="stylesheet" href="/assets/css/slicknav.min.css">
+<link rel="stylesheet" href="/assets/css/animate.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/responsive.css">
+</head>
+<body>
+	<div th:insert="~{Fragments/defaultFragment :: header}"></div>
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="inner-header">
+						<h3>Create Your account</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<section id="content" class="section-padding">
+		<p sec:authorize="hasRole('ROLE_FACULTY')">
+			<a href="/home"> Home </a> | <a href="/manageAccount">
+				ManageAccount </a>
+		</p>
+		<p sec:authorize="!hasRole('ROLE_FACULTY') or !isAuthenticated()">
+			<a href="/home"> Home </a>
+		</p>
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-5 col-md-6 col-xs-12">
+					<div class="page-login-form box">
+						<p sec:authorize="!hasRole('ROLE_FACULTY') && isAuthenticated()">
+							You already have an Account!<br> <a href="/home"> Go
+								Back TO Home</a>
+						</p>
+						<div sec:authorize="hasRole('ROLE_FACULTY') or !isAuthenticated()">
+							<h3>Registration</h3>
+							<form action="#" th:action="@{/registration}"
+								th:object="${accountForm}" method="post">
+								<p th:if="${RoyalIDNotValid}" class="error">Entered RoyalID
+									is already Exist!</p>
+								<p th:if="${PasswordShort}" class="error">Password is not
+									long enough!</p>
+								<p th:if="${PasswordNoMatch}" class="error">Passwords do not
+									match!</p>
+								<p th:if="${NoRole}" class="error">You must Select at least
+									1 Role.</p>
+								<p th:if="${EmailNotValid}" class="error">The email you
+									entered is not valid.</p>
+								<table>
+									<tr class="form-group">
+										<td>Royal ID</td>
+										<td><input type="text" class="form-control"
+											required="required" th:field="*{account.royalID}" /></td>
+									</tr>
+									<tr class="form-group">
+										<td>First Name</td>
+										<td><input type="text" class="form-control"
+											required="required" th:field="*{account.firstName}" /></td>
+									</tr>
+									<tr class="form-group">
+										<td>Last Name</td>
+										<td><input type="text" class="form-control"
+											required="required" th:field="*{account.lastName}" /></td>
+									</tr>
+									<tr class="form-group">
+										<td>Email</td>
+										<td><input type="text" class="form-control"
+											required="required" th:field="*{account.email}" /></td>
+									</tr>
+									<tr class="form-group">
+										<td>Address</td>
+										<td><input type="text" class="form-control"
+											required="required" th:field="*{account.userAddress}" /></td>
+									</tr>
+									<tr class="form-group">
+										<td>Phone Number</td>
+										<td><input type="text" class="form-control"
+											required="required" th:field="*{account.phoneNumber}" /></td>
+									</tr>
+									<tr class="form-group">
+										<td>Password</td>
+										<td><input type="password" class="form-control"
+											required="required" th:field="*{password}" /></td>
+									</tr>
+									<tr class="form-group">
+										<td>Re-type Password</td>
+										<td><input type="password" class="form-control"
+											required="required" th:field="*{confirmPassword}" /></td>
+									</tr>
+
+									<tr class="form-group">
+										<td colspan="2">
+											<h3>User Roles</h3>
+											<ul>
+											<!-- <li th:each="aType : ${roles}"  th:if=${aType}!='ROLE_FACULTY' -->
+												<li th:each="aType : ${roles}" sec:authorize="hasRole('ROLE_FACULTY')">
+												<input type="checkbox"
+													th:field="*{account.roles}" th:value="${aType}" /> <label
+													th:for="${#ids.prev('account.roles')}" th:text="${aType}"></label>
+												</li>
+												
+												<li th:each="aType : ${roles}" sec:authorize="!hasRole('ROLE_FACULTY')" th:if=${aType}!='ROLE_FACULTY'>
+												<input type="checkbox"
+													th:field="*{account.roles}" th:value="${aType}" /> <label
+													th:for="${#ids.prev('account.roles')}" th:text="${aType}"></label>
+												</li>
+											</ul>
+										</td>
+									</tr>
+
+									<tr class="form-group">
+										<td colspan="2">
+											<h3>Skills</h3>
+											<ul>
+												<li th:each="skill : ${skills}"><input type="checkbox"
+													name="ski" th:value="${skill.skillID}" /> <label
+													th:text="${skill.skillName}"></label></li>
+											</ul>
+										</td>
+									</tr>
+
+									<tr class="form-group">
+										<td colspan="2">
+											<button onclick="showJobHistory();return false;"
+												class="btn btn-common log-btn mt-3">Click here to
+												add your job</button>
+										</td>
+									</tr>
+									<tr class="form-group">
+										<td colspan="2">
+											<div id="jobhistory" style="display: none">
+												<h3>Work-Experience</h3>
+												<ul>
+													<li><label>Company Name: </label> <input type="text"
+														class="form-control"
+														th:field="*{account.workExperience[0].companyName}" /></li>
+
+													<li><label>Position: </label> <input type="text"
+														class="form-control"
+														th:field="*{account.workExperience[0].position}" /></li>
+
+													<li><label>Start Date: </label> <input type="date"
+														class="form-control"
+														th:field="*{account.workExperience[0].startDate}" /></li>
+
+													<li><label>End Date: </label> <input type="date"
+														class="form-control"
+														th:field="*{account.workExperience[0].endDate}" /></li>
+													<li><label> Currently Employed at this
+															Company?</label> <br> <input type="radio" value="true"
+														th:field="*{account.workExperience[0].currentlyEmployed}" />Yes
+														<br> <input type="radio" value="false"
+														th:field="*{account.workExperience[0].currentlyEmployed}" />
+														No <br></li>
+												</ul>
+											</div>
+										</td>
+									</tr>
+									<tr class="form-group">
+										<td><button class="btn btn-common log-btn mt-3"
+												type="submit">Submit</button></td>
+										<td><input class="btn btn-common log-btn mt-3"
+											type="button" onclick="location.href='/home';" value="Cancel" /></td>
+									</tr>
+								</table>
+							</form>
+							<p class="text-center">
+								Already have an account?<a href="/login"> Sign In</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div th:insert="~{Fragments/defaultFragment :: footer}"></div>
+	<script>
+		function showJobHistory() {
+			var x = document.getElementById("jobhistory");
+			if (x.style.display === "none") {
+				x.style.display = "block";
+			} else {
+				x.style.display = "none";
+			}
+			return false;
+		}
+	</script>
+</body>
+</html>

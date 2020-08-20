@@ -1,0 +1,73 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="UTF-8">
+<title>Activate Account</title>
+<style>
+.error {
+	color: red;
+	font-style: italic;
+}
+</style>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/line-icons.css">
+<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/assets/css/owl.theme.default.css">
+<link rel="stylesheet" href="/assets/css/slicknav.min.css">
+<link rel="stylesheet" href="/assets/css/animate.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/responsive.css">
+</head>
+<body>
+	<div th:insert="~{Fragments/defaultFragment :: header}"></div>
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="inner-header">
+						<h3>Activate Your Account</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<section id="content" class="section-padding">
+		<a href="/home"> Home </a>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="inner-header" style="padding-left: 350px">
+						<h2>Activate Your account</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+		<form action="#" th:action="@{/activateAccount}"
+			th:object="${userActivation}" method="post" class="login-form"
+			style="padding-left: 450px">
+			<p th:if="${NoMatchSpecialCodeOrRoyal}" class="error">Royal ID
+				and/or Special Code is incorrect</p>
+			<p th:if="${SpecialCodeExpired}" class="error">Your Special Code
+				has expired, and a new code has been sent to your Email</p>
+			<table>
+				<tr>
+					<td>Royal ID</td>
+					<td><input type="text" required="required"
+						class="form-control" th:field="*{royalID}" /></td>
+				</tr>
+				<tr>
+					<td>Special Code</td>
+					<td><input type="text" required="required"
+						class="form-control" th:field="*{specialCode}" /></td>
+				</tr>
+				<tr>
+					<td><button class="btn btn-common log-btn mt-3" type="submit">Submit</button></td>
+				</tr>
+			</table>
+		</form>
+	</section>
+	<div th:insert="~{Fragments/defaultFragment :: footer}"></div>
+</body>
+</html>

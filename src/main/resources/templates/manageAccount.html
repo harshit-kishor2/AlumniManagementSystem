@@ -1,0 +1,71 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="ISO-8859-1">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="keywords"
+	content="Bootstrap, Landing page, Template, Registration, Landing">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="Grayrids">
+<title>Manage Account</title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/line-icons.css">
+<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/assets/css/owl.theme.default.css">
+<link rel="stylesheet" href="/assets/css/slicknav.min.css">
+<link rel="stylesheet" href="/assets/css/animate.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/responsive.css">
+</head>
+<body>
+	<div th:insert="~{Fragments/defaultFragment :: header}"></div>
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="inner-header">
+						<h3>Manage Accounts</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="content">
+		<div class="container">
+		<a href="/home"> Home </a>
+			<div class="row">
+				<div class="col-lg-9 col-md-12 col-xs-12">
+					<div class="job-alerts-item">
+						<p sec:authorize="!hasRole('ROLE_FACULTY')" class="error">
+							You Are Not Authorized to Access This Page !!!!<br> <a
+								href="/home"> Go Back TO Home</a>
+						</p>
+						<div sec:authorize="hasRole('ROLE_FACULTY')">
+							<h6>Choose one of the link to perform task.</h6>
+							<p>
+								<a href="/registration" sec:authorize="hasRole('ROLE_FACULTY')">Create
+									a New Account for Someone else</a>
+							</p>
+							<p>
+								<a href="/browseUsers" sec:authorize="hasRole('ROLE_FACULTY')">Update
+									Existing Account for someone else</a>
+							</p>
+							<p>
+								<a href="/accountDeletion"
+									sec:authorize="hasRole('ROLE_FACULTY')">Delete a user's
+									account</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{Fragments/defaultFragment :: footer}"></div>
+</body>
+</html>

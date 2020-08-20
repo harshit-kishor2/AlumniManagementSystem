@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="ISO-8859-1">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="keywords"
+	content="Bootstrap, Landing page, Template, Registration, Landing">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Browse Job Openings</title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/line-icons.css">
+<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/assets/css/owl.theme.default.css">
+<link rel="stylesheet" href="/assets/css/slicknav.min.css">
+<link rel="stylesheet" href="/assets/css/animate.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/responsive.css">
+<style>
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+</style>
+</head>
+<body>
+	<div th:insert="~{Fragments/defaultFragment :: header}"></div>
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="inner-header">
+						<h3>Browse Job-Openings</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<section class="job-browse section">
+		<a href="/home"> Home </a>
+		<div class="container">
+			<div class="row">
+				<div th:unless="${#lists.isEmpty(jobopenings)}">
+					<h5>Search Job Openings List</h5>
+					<table>
+						<thead>
+							<tr>
+								<th>Job ID</th>
+								<th>position</th>
+								<th>location</th>
+								<th>start Date</th>
+								<th>Pay Rate</th>
+								<th>Job Description</th>
+								<th>Hours Per Week</th>
+								<th>End Date</th>
+								<th>Company Name</th>
+								<th>Proficiency</th>
+								<th>Contact Number</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="jobopening : ${jobopenings}">
+								<td th:text="${{jobopening.jobID}}">Job ID</td>
+								<td th:text="${{jobopening.position}}">Position</td>
+								<td th:text="${{jobopening.location}}">Location</td>
+								<td th:text="${{jobopening.startDate}}">Start Date</td>
+								<td th:text="${{jobopening.payrate}}">Pay Rate</td>
+								<td th:text="${{jobopening.jobDescription}}">Job
+									Description</td>
+								<td th:text="${{jobopening.hoursPerWeek}}">Hours Per Week</td>
+								<td th:text="${{jobopening.endDate}}">End Date</td>
+								<td th:text="${{jobopening.companyName.companyName}}">Company
+									Name</td>
+								<td th:text="${{jobopening.proficiancy}}">Proficiency</td>
+								<td th:text="${{jobopening.companyName.phone_Number}}">Contact
+									Number</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="content" class="section-padding">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-5 col-md-6 col-xs-12">
+					<form action="#" class="login-form"
+						th:action="@{/browsejobopenings}" th:object="${sortJobOpening}"
+						method="post">
+						<h3>Filter</h3>
+						<br> <label>Company</label>
+						<div
+							th:if="${companies != null and not #lists.isEmpty(companies)}">
+							<select class="form-control"
+								th:field="*{jobOpening.companyName.companyName}">
+								<option th:value="0">Please Select</option>
+								<option th:each="company:${companies}" th:value="${company}"
+									th:text="${company}"></option>
+							</select>
+						</div>
+						<label>Position</label>
+						<div
+							th:if="${positions != null and not #lists.isEmpty(positions)}">
+							<select class="form-control" th:field="*{jobOpening.position}">
+								<option th:value="0">Please Select</option>
+								<option th:each="position:${positions}" th:value="${position}"
+									th:text="${position}"></option>
+							</select>
+						</div>
+						<label>Proficiency</label>
+						<div
+							th:if="${proficiencies != null and not #lists.isEmpty(proficiencies)}">
+							<select class="form-control" th:field="*{jobOpening.proficiancy}">
+								<option th:value="0">Please Select</option>
+								<option th:each="proficiency:${proficiencies}"
+									th:value="${proficiency}" th:text="${proficiency}"></option>
+							</select>
+						</div>
+						<label>Location</label>
+						<div
+							th:if="${locations != null and not #lists.isEmpty(locations)}">
+							<select class="form-control" th:field="*{jobOpening.location}">
+								<option th:value="0">Please Select</option>
+								<option th:each="location:${locations}" th:value="${location}"
+									th:text="${location}"></option>
+							</select>
+						</div>
+						<label>Hours Per Week</label>
+						<div
+							th:if="${workhours != null and not #lists.isEmpty(workhours)}">
+							<select class="form-control"
+								th:field="*{jobOpening.hoursPerWeek}">
+								<option th:value="0">Please Select</option>
+								<option th:each="workhour:${workhours}" th:value="${workhour}"
+									th:text="${workhour}"></option>
+							</select>
+						</div>
+						<button class="btn btn-common log-btn mt-3" type="submit">Apply
+							Filters</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div th:insert="~{Fragments/defaultFragment :: footer}"></div>
+</body>
+</html>

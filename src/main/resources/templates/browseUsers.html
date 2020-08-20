@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="ISO-8859-1">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="keywords"
+	content="Bootstrap, Landing page, Template, Registration, Landing">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="Grayrids">
+<title>Browse Users</title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/line-icons.css">
+<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/assets/css/owl.theme.default.css">
+<link rel="stylesheet" href="/assets/css/slicknav.min.css">
+<link rel="stylesheet" href="/assets/css/animate.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/responsive.css">
+<style>
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+	table-layout: fixed;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+	word-wrap: break-word;
+}
+</style>
+</head>
+<body>
+	<div th:insert="~{Fragments/defaultFragment :: header}"></div>
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="inner-header">
+						<h3>Browse CurrentStudent / Alumni</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="content">
+	<p sec:authorize="!hasRole('ROLE_FACULTY')">
+	<a href="/home"> Home </a></p>
+	<p sec:authorize="hasRole('ROLE_FACULTY')">
+		<a href="/home"> Home </a> | <a href="/manageAccount">
+				ManageAccount </a>
+		</p>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-12 col-xs-12">
+					<div class="right-sideabr">
+						<div class="page-login-form box">
+							<form action="#" th:action="@{/browseUsers}"
+								th:object="${filters}" method="post">
+								<h3>Filter</h3>
+								<br> Search By Name:<br> <input type="text"
+									class="form-control" th:field="*{searchName}"
+									placeholder="enter first name:" /> <br>
+								<ul>
+									<li><label> Filter by User Type:</label></li>
+									<li><input type="radio" value="student"
+										th:field="*{userType}"> Current Student</li>
+									<li><input type="radio" value="alumni"
+										th:field="*{userType}"> Alumni</li>
+									<li><input type="radio" value="All" th:field="*{userType}">
+										All Users</li>
+								</ul>
+								<br>
+								<ul>
+									<li><label> Select skill criteria to filter by</label></li>
+									<li th:each="skill : ${skills}"><input type="checkbox"
+										name="ski" th:value="${skill.skillName}"
+										th:field="*{selectedSkills}" /> <label
+										th:text="${skill.skillName}"></label></li>
+								</ul>
+								<button class="btn btn-common log-btn mt-3" type="submit">Apply
+									Filters</button>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-9 col-md-12 col-xs-12">
+					<div class="job-alerts-item">
+						<h5>Search User List</h5>
+						<table>
+
+							<tr>
+								<th>Royal ID</th>
+								<th>First Name</th>
+								<th>Last Name</th>
+								<th>Email</th>
+								<th>Address</th>
+								<th>Phone</th>
+								<th>Profile</th>
+								<th sec:authorize="hasRole('ROLE_FACULTY')">Update Account</th>
+
+							</tr>
+
+							<tr th:each="user: ${systemusers}">
+								<td th:text="${user.royalID}" style="width: 50px;"></td>
+								<td th:text="${user.firstName}"></td>
+								<td th:text="${user.lastName}"></td>
+								<td th:text="${user.email}">}</td>
+								<td th:text="${user.userAddress}">}</td>
+								<td th:text="${user.phoneNumber}">}</td>
+								<td><a th:href="@{/viewProfile(royalID=${{user.royalID}})}">
+										View Details </a></td>
+								<td sec:authorize="hasRole('ROLE_FACULTY')"><a
+									th:href="@{/updateUserAccount(royalID=${{user.royalID}})}">Update
+										User Account</a></td>
+							</tr>
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{Fragments/defaultFragment :: footer}"></div>
+</body>
+</html>
